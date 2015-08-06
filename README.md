@@ -5,9 +5,13 @@ Basically, this tool extends the ClinicalPipelineFactory class by adding the opp
 
 ## Getting started
 
-To run the ctakes-clinical-pipeline, you can launch the following script:
+To build the project, you can type the following command:
 
-> bin/run_ctakes.sh -i /path/to/input /path/to/output -o -u umls_user -p umls_pass [-j /path/to/jar] [-c /path/to/ctakes]
+> mvn clean install
+
+To run the ctakes-clinical-pipeline, you can launch the following script (in `/src/main/bin`):
+
+> ./run_ctakes.sh -i /path/to/input /path/to/output -o -u umls_user -p umls_pass [-j /path/to/jar] [-c /path/to/ctakes]
 
 Please be sure that Apache cTAKES (both jar files and resources) is correctly installed on your machine.
 
