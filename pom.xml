@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.cnr.iac</groupId>
+	<artifactId>ctakes-clinical-pipeline</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Clinical Pipeline Engine using Apache cTAKES</name>
+	<description>An implementation of a clinical pipeline engine based on Apache cTAKES</description>
+
+	<properties>
+		<ctakes.version>3.2.2</ctakes.version>
+		<maven.compiler.source>1.7</maven.compiler.source>
+ 		<maven.compiler.target>1.7</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<repositories>
+		<repository>
+			<id>Internal company repository</id>
+			<url>file://${basedir}/lib</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.ctakes</groupId>
+			<artifactId>ctakes-type-system</artifactId>
+			<version>${ctakes.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ctakes</groupId>
+    		<artifactId>ctakes-assertion-res</artifactId>
+    		<version>${ctakes.version}</version>
+    		<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ctakes</groupId>
+			<artifactId>ctakes-core</artifactId>
+			<version>${ctakes.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ctakes</groupId>
+    		<artifactId>ctakes-chunker</artifactId>
+			<version>${ctakes.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ctakes</groupId>
+			<artifactId>ctakes-constituency-parser</artifactId>
+			<version>${ctakes.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ctakes</groupId>
+			<artifactId>ctakes-context-tokenizer</artifactId>
+			<version>${ctakes.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ctakes</groupId>
+			<artifactId>ctakes-dependency-parser</artifactId>
+			<version>${ctakes.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ctakes</groupId>
+			<artifactId>ctakes-dictionary-lookup</artifactId>
+			<version>${ctakes.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ctakes</groupId>
+			<artifactId>ctakes-dictionary-lookup-fast</artifactId>
+			<version>${ctakes.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ctakes</groupId>
+    		<artifactId>ctakes-assertion</artifactId>
+    		<version>${ctakes.version}</version>
+    		<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>
