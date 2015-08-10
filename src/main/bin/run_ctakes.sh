@@ -22,7 +22,7 @@ INPUT=""
 OUTPUT=""
 UMLS_USER=""
 UMLS_PASS=""
-CTAKES_HOME=""
+CTAKES_HOME="/usr/local/apache-ctakes-3.2.2"
 CLINICAL_PIPELINE_JAR="../../../target/ctakes-clinical-pipeline-0.0.1-SNAPSHOT.jar"
 
 while [ "$1" != ""  ] 
@@ -78,12 +78,6 @@ then
 	exit 1
 fi
 
-#JARS=($(find ${CTAKES_HOME}/lib -iname "*.jar" -type f))
-#SAVE_IFS=$IFS
-#IFS=$":"
-#JOIN="${JARS[*]}"
-#IFS=$SAVE_IFS
-
 CTAKES_JARS=""
 for jar in $(find ${CTAKES_HOME}/lib -iname "*.jar" -type f)
 do
@@ -94,9 +88,7 @@ done
 current_dir=$PWD
 cd $CTAKES_HOME
 
-#java -Dctakes.umlsuser=${UMLS_USER} -Dctakes.umlspw=${UMLS_PASS} -cp $CTAKES_HOME/desc/:$CTAKES_HOME/resources/:$JOIN -Dlog4j.configuration=file:$CTAKES_HOME/config/log4j.xml -Xms512M -Xmx3g org.apache.ctakes.clinicalpipeline.runtime.BagOfCUIsGenerator ${INPUT} ${OUTPUT}
-
-java -Dctakes.umlsuser=${UMLS_USER} -Dctakes.umlspw=${UMLS_PASS} -cp ${CTAKES_HOME}/desc/:${CTAKES_HOME}/resources/:${CTAKES_JARS%?}:${current_dir}/${CLINICAL_PIPELINE_JAR} -Dlog4j.configuration=file:${CTAKES_HOME}/config/log4j.xml -Xms512M -Xmx3g it.cnr.iac.CTAKESClinicalPipelineFactory ${current_dir}/$INPUT ${current_dir}/$OUTPUT
+java -Dctakes.umlsuser=${UMLS_USER} -Dctakes.umlspw=${UMLS_PASS} -cp ${CTAKES_HOME}/desc/:${CTAKES_HOME}/resources/:${CTAKES_JARS%?}:${current_dir}/${CLINICAL_PIPELINE_JAR} -Dlog4j.configuration=file:${CTAKES_HOME}/config/log4j.xml -Xms512M -Xmx3g it.cnr.iac.CTAKESClinicalPipelineFactory $INPUT $OUTPUT
 
 cd $current_dir
 
