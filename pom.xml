@@ -35,8 +35,10 @@
 		<maven-source-plugin.version>2.1.2</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
 		<maven-gpg-plugin.version>1.4</maven-gpg-plugin.version>
+		<maven-surfire-plugin.version>2.12</maven-surfire-plugin.version>
 		<checksum-maven-plugin.version>1.0.1</checksum-maven-plugin.version>
 		<implementation.build>${scmBranch}@r${buildNumber}</implementation.build>
+		<maven-surfire-plugin.version>2.12</maven-surfire-plugin.version>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ssZ</maven.build.timestamp.format>
 	</properties>
 
@@ -89,6 +91,44 @@
 			</plugin>
 		</plugins>
 	</pluginManagement>
+	<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<inherited>true</inherited>
+				<configuration>
+					<source>${javac.src.version}</source>
+					<target>${javac.target.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surfire-plugin.version}</version>
+				<inherited>true</inherited>
+				<configuration>
+					<systemPropertyVariables>
+						<test.build.data>${project.basedir}/target/test-data/</test.build.data>
+					</systemPropertyVariables>
+					<argLine>-Xmx512m</argLine>
+					<forkMode>always</forkMode>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+		</plugins>
     </build>
 
 	<dependencies>
