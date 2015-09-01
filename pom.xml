@@ -62,6 +62,13 @@
 		</repository>
 	</repositories>
 
+	<scm>
+		<url>https://github.com/giuseppetotaro/ctakes-clinical-pipeline</url>
+		<connection>scm:git:git://github.com/giuseppetotaro/ctakes-clinical-pipeline.git</connection>
+		<developerConnection>scm:git:git@github.com:giuseppetotaro/ctakes-clinical-pipeline.git</developerConnection>
+	    <tag>HEAD</tag>
+    </scm>
+
     <build>
 	<pluginManagement>
 		<plugins>
