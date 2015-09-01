@@ -1,3 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -11,8 +28,28 @@
 		<ctakes.version>3.2.2</ctakes.version>
 		<maven.compiler.source>1.7</maven.compiler.source>
  		<maven.compiler.target>1.7</maven.compiler.target>
+ 		<javac.src.version>1.7</javac.src.version>
+		<javac.target.version>1.7</javac.target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven-deploy-plugin.version>2.5</maven-deploy-plugin.version>
+		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
+		<maven-source-plugin.version>2.1.2</maven-source-plugin.version>
+		<implementation.build>${scmBranch}@r${buildNumber}</implementation.build>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ssZ</maven.build.timestamp.format>
 	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Nexus Staging Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/giuseppetotaro/ctakes-clinical-pipeline/issues</url>
+	</issueManagement>
 	
 	<repositories>
 		<repository>
@@ -21,6 +58,27 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
+
+	<pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${maven-deploy-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven-release-plugin.version}</version>
+				<configuration>
+					<mavenExecutorId>forked-path</mavenExecutorId>
+					<useReleaseProfile>false</useReleaseProfile>
+					<arguments>-Prelease</arguments>
+					<!--autoVersionSubmodules>true</autoVersionSubmodules -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</pluginManagement>
 
 	<dependencies>
 		<dependency>
@@ -83,4 +141,88 @@
 			<version>2.0.0</version>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>${maven-source-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+								<configuration>
+									<archive>
+										<manifest>
+											<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+											<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+										</manifest>
+										<manifestEntries>
+											<Implementation-Build>${implementation.build}</Implementation-Build>
+											<Implementation-Build-Date>${maven.build.timestamp}</Implementation-Build-Date>
+											<X-Compile-Source-JDK>${javac.src.version}</X-Compile-Source-JDK>
+											<X-Compile-Target-JDK>${javac.target.version}</X-Compile-Target-JDK>
+										</manifestEntries>
+									</archive>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>${maven-javadoc-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+									<quiet>true</quiet>
+									<archive>
+										<manifest>
+											<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+											<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+										</manifest>
+										<manifestEntries>
+											<Implementation-Build>${implementation.build}</Implementation-Build>
+											<Implementation-Build-Date>${maven.build.timestamp}</Implementation-Build-Date>
+											<X-Compile-Source-JDK>${javac.src.version}</X-Compile-Source-JDK>
+											<X-Compile-Target-JDK>${javac.target.version}</X-Compile-Target-JDK>
+										</manifestEntries>
+									</archive>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>${maven-gpg-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>net.ju-n.maven.plugins</groupId>
+						<artifactId>checksum-maven-plugin</artifactId>
+						<version>${checksum-maven-plugin.version}</version>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
