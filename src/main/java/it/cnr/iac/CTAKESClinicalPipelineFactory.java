@@ -201,8 +201,8 @@ final public class CTAKESClinicalPipelineFactory {
 
 		jcas.setDocumentText(note);
 		final AnalysisEngineDescription aed = getDefaultPipeline();
-		// final AnalysisEngineDescription aed = getFastPipeline(); // Outputs
-		// from default and fast pipelines are identical
+		// Outputs from default and fast pipelines are identical
+		// final AnalysisEngineDescription aed = getFastPipeline();
 		SimplePipeline.runPipeline(jcas, aed);
 
 		serialize(jcas, outputFile);
@@ -232,9 +232,6 @@ final public class CTAKESClinicalPipelineFactory {
 				System.out.println();
 			}
 
-		}
-		if (args.length > 0) {
-			aed.toXML(new FileWriter(args[0]));
 		}
 	}
 
