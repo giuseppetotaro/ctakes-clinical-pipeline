@@ -76,272 +76,272 @@ import java.util.*;
  */
 final public class CTAKESClinicalPipelineFactory {
 
-	public static AnalysisEngineDescription getDefaultPipeline()
-			throws ResourceInitializationException {
-		AggregateBuilder builder = new AggregateBuilder();
-		builder.add(getTokenProcessingPipeline());
-		builder.add(getNpChunkerPipeline());
-		builder.add(AnalysisEngineFactory
-				.createEngineDescription(ConstituencyParser.class));
-		builder.add(UmlsDictionaryLookupAnnotator.createAnnotatorDescription());
-		builder.add(ClearNLPDependencyParserAE.createAnnotatorDescription());
-		builder.add(PolarityCleartkAnalysisEngine.createAnnotatorDescription());
-		builder.add(UncertaintyCleartkAnalysisEngine
-				.createAnnotatorDescription());
-		builder.add(HistoryCleartkAnalysisEngine.createAnnotatorDescription());
-		builder.add(ConditionalCleartkAnalysisEngine
-				.createAnnotatorDescription());
-		builder.add(GenericCleartkAnalysisEngine.createAnnotatorDescription());
-		builder.add(SubjectCleartkAnalysisEngine.createAnnotatorDescription());
+  public static AnalysisEngineDescription getDefaultPipeline()
+      throws ResourceInitializationException {
+    AggregateBuilder builder = new AggregateBuilder();
+    builder.add(getTokenProcessingPipeline());
+    builder.add(getNpChunkerPipeline());
+    builder.add(AnalysisEngineFactory
+        .createEngineDescription(ConstituencyParser.class));
+    builder.add(UmlsDictionaryLookupAnnotator.createAnnotatorDescription());
+    builder.add(ClearNLPDependencyParserAE.createAnnotatorDescription());
+    builder.add(PolarityCleartkAnalysisEngine.createAnnotatorDescription());
+    builder.add(UncertaintyCleartkAnalysisEngine
+        .createAnnotatorDescription());
+    builder.add(HistoryCleartkAnalysisEngine.createAnnotatorDescription());
+    builder.add(ConditionalCleartkAnalysisEngine
+        .createAnnotatorDescription());
+    builder.add(GenericCleartkAnalysisEngine.createAnnotatorDescription());
+    builder.add(SubjectCleartkAnalysisEngine.createAnnotatorDescription());
 
-		return builder.createAggregateDescription();
-	}
+    return builder.createAggregateDescription();
+  }
 
-	public static AnalysisEngineDescription getFastPipeline()
-			throws ResourceInitializationException {
-		AggregateBuilder builder = new AggregateBuilder();
-		builder.add(getTokenProcessingPipeline());
-		try {
-			builder.add(AnalysisEngineFactory
-					.createEngineDescription(
-							DefaultJCasTermAnnotator.class,
-							AbstractJCasTermAnnotator.PARAM_WINDOW_ANNOT_PRP,
-							"org.apache.ctakes.typesystem.type.textspan.Sentence",
-							JCasTermAnnotator.DICTIONARY_DESCRIPTOR_KEY,
-							ExternalResourceFactory.createExternalResourceDescription(
-									FileResourceImpl.class,
-									FileLocator
-											.locateFile("org/apache/ctakes/dictionary/lookup/fast/cTakesHsql.xml"))));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new ResourceInitializationException(e);
-		}
-		builder.add(ClearNLPDependencyParserAE.createAnnotatorDescription());
-		builder.add(PolarityCleartkAnalysisEngine.createAnnotatorDescription());
-		builder.add(UncertaintyCleartkAnalysisEngine
-				.createAnnotatorDescription());
-		builder.add(HistoryCleartkAnalysisEngine.createAnnotatorDescription());
-		builder.add(ConditionalCleartkAnalysisEngine
-				.createAnnotatorDescription());
-		builder.add(GenericCleartkAnalysisEngine.createAnnotatorDescription());
-		builder.add(SubjectCleartkAnalysisEngine.createAnnotatorDescription());
-		return builder.createAggregateDescription();
-	}
+  public static AnalysisEngineDescription getFastPipeline()
+      throws ResourceInitializationException {
+    AggregateBuilder builder = new AggregateBuilder();
+    builder.add(getTokenProcessingPipeline());
+    try {
+      builder.add(AnalysisEngineFactory
+          .createEngineDescription(
+              DefaultJCasTermAnnotator.class,
+              AbstractJCasTermAnnotator.PARAM_WINDOW_ANNOT_PRP,
+              "org.apache.ctakes.typesystem.type.textspan.Sentence",
+              JCasTermAnnotator.DICTIONARY_DESCRIPTOR_KEY,
+              ExternalResourceFactory.createExternalResourceDescription(
+                  FileResourceImpl.class,
+                  FileLocator
+                  .locateFile("org/apache/ctakes/dictionary/lookup/fast/cTakesHsql.xml"))));
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+      throw new ResourceInitializationException(e);
+    }
+    builder.add(ClearNLPDependencyParserAE.createAnnotatorDescription());
+    builder.add(PolarityCleartkAnalysisEngine.createAnnotatorDescription());
+    builder.add(UncertaintyCleartkAnalysisEngine
+        .createAnnotatorDescription());
+    builder.add(HistoryCleartkAnalysisEngine.createAnnotatorDescription());
+    builder.add(ConditionalCleartkAnalysisEngine
+        .createAnnotatorDescription());
+    builder.add(GenericCleartkAnalysisEngine.createAnnotatorDescription());
+    builder.add(SubjectCleartkAnalysisEngine.createAnnotatorDescription());
+    return builder.createAggregateDescription();
+  }
 
-	public static AnalysisEngineDescription getParsingPipeline()
-			throws ResourceInitializationException {
-		AggregateBuilder builder = new AggregateBuilder();
-		builder.add(getTokenProcessingPipeline());
-		builder.add(ClearNLPDependencyParserAE.createAnnotatorDescription());
-		builder.add(AnalysisEngineFactory
-				.createEngineDescription(ConstituencyParser.class));
-		return builder.createAggregateDescription();
-	}
+  public static AnalysisEngineDescription getParsingPipeline()
+      throws ResourceInitializationException {
+    AggregateBuilder builder = new AggregateBuilder();
+    builder.add(getTokenProcessingPipeline());
+    builder.add(ClearNLPDependencyParserAE.createAnnotatorDescription());
+    builder.add(AnalysisEngineFactory
+        .createEngineDescription(ConstituencyParser.class));
+    return builder.createAggregateDescription();
+  }
 
-	public static AnalysisEngineDescription getTokenProcessingPipeline()
-			throws ResourceInitializationException {
-		AggregateBuilder builder = new AggregateBuilder();
-		builder.add(SimpleSegmentAnnotator.createAnnotatorDescription());
-		builder.add(SentenceDetector.createAnnotatorDescription());
-		builder.add(TokenizerAnnotatorPTB.createAnnotatorDescription());
-		builder.add(LvgAnnotator.createAnnotatorDescription());
-		builder.add(ContextDependentTokenizerAnnotator
-				.createAnnotatorDescription());
-		builder.add(POSTagger.createAnnotatorDescription());
-		return builder.createAggregateDescription();
-	}
+  public static AnalysisEngineDescription getTokenProcessingPipeline()
+      throws ResourceInitializationException {
+    AggregateBuilder builder = new AggregateBuilder();
+    builder.add(SimpleSegmentAnnotator.createAnnotatorDescription());
+    builder.add(SentenceDetector.createAnnotatorDescription());
+    builder.add(TokenizerAnnotatorPTB.createAnnotatorDescription());
+    builder.add(LvgAnnotator.createAnnotatorDescription());
+    builder.add(ContextDependentTokenizerAnnotator
+        .createAnnotatorDescription());
+    builder.add(POSTagger.createAnnotatorDescription());
+    return builder.createAggregateDescription();
+  }
 
-	public static AnalysisEngineDescription getNpChunkerPipeline()
-			throws ResourceInitializationException {
-		AggregateBuilder builder = new AggregateBuilder();
-		builder.add(Chunker.createAnnotatorDescription());
-		builder.add(getStandardChunkAdjusterAnnotator());
-		builder.add(AnalysisEngineFactory
-				.createEngineDescription(CopyNPChunksToLookupWindowAnnotations.class));
-		builder.add(AnalysisEngineFactory
-				.createEngineDescription(RemoveEnclosedLookupWindows.class));
-		return builder.createAggregateDescription();
-	}
+  public static AnalysisEngineDescription getNpChunkerPipeline()
+      throws ResourceInitializationException {
+    AggregateBuilder builder = new AggregateBuilder();
+    builder.add(Chunker.createAnnotatorDescription());
+    builder.add(getStandardChunkAdjusterAnnotator());
+    builder.add(AnalysisEngineFactory
+        .createEngineDescription(CopyNPChunksToLookupWindowAnnotations.class));
+    builder.add(AnalysisEngineFactory
+        .createEngineDescription(RemoveEnclosedLookupWindows.class));
+    return builder.createAggregateDescription();
+  }
 
-	public static AnalysisEngineDescription getStandardChunkAdjusterAnnotator()
-			throws ResourceInitializationException {
-		AggregateBuilder builder = new AggregateBuilder();
-		// adjust NP in NP NP to span both
-		builder.add(ChunkAdjuster.createAnnotatorDescription(new String[] {
-				"NP", "NP" }, 1));
-		// adjust NP in NP PP NP to span all three
-		builder.add(ChunkAdjuster.createAnnotatorDescription(new String[] {
-				"NP", "PP", "NP" }, 2));
-		return builder.createAggregateDescription();
-	}
+  public static AnalysisEngineDescription getStandardChunkAdjusterAnnotator()
+      throws ResourceInitializationException {
+    AggregateBuilder builder = new AggregateBuilder();
+    // adjust NP in NP NP to span both
+    builder.add(ChunkAdjuster.createAnnotatorDescription(new String[] {
+        "NP", "NP" }, 1));
+    // adjust NP in NP PP NP to span all three
+    builder.add(ChunkAdjuster.createAnnotatorDescription(new String[] {
+        "NP", "PP", "NP" }, 2));
+    return builder.createAggregateDescription();
+  }
 
-	public static void main(final String... args) throws IOException,
-			UIMAException, SAXException {
-		if (args.length < 2) {
-			System.err.println("Usage: "
-					+ CTAKESClinicalPipelineFactory.class.getName()
-					+ " /path/to/input /path/to/output");
-			System.exit(1);
-		}
-		
-		String input = args[0];
-		String output = args[1];
-		File inputFile = new File(input);
-		File outputFile = new File(output);
-		
-		if (!inputFile.isFile() || !inputFile.canRead()) {
-			System.err.println("Error: " + input
-					+ " is not a file or cannot be read!");
-			System.exit(1);
-		}
+  public static void main(final String... args) throws IOException,
+  UIMAException, SAXException {
+    if (args.length < 2) {
+      System.err.println("Usage: "
+          + CTAKESClinicalPipelineFactory.class.getName()
+          + " /path/to/input /path/to/output");
+      System.exit(1);
+    }
 
-		final JCas jcas = JCasFactory.createJCas();
+    String input = args[0];
+    String output = args[1];
+    File inputFile = new File(input);
+    File outputFile = new File(output);
 
-		String note = readFile(inputFile);
+    if (!inputFile.isFile() || !inputFile.canRead()) {
+      System.err.println("Error: " + input
+          + " is not a file or cannot be read!");
+      System.exit(1);
+    }
 
-		jcas.setDocumentText(note);
-		final AnalysisEngineDescription aed = getDefaultPipeline();
-		// Outputs from default and fast pipelines are identical
-		// final AnalysisEngineDescription aed = getFastPipeline();
-		SimplePipeline.runPipeline(jcas, aed);
+    final JCas jcas = JCasFactory.createJCas();
 
-		serialize(jcas, outputFile);
+    String note = readFile(inputFile);
 
-		final boolean printCuis = Arrays.asList(args).contains("cuis");
-		final Collection<String> codes = new ArrayList<>();
-		for (IdentifiedAnnotation entity : JCasUtil.select(jcas,
-				IdentifiedAnnotation.class)) {
+    jcas.setDocumentText(note);
+    final AnalysisEngineDescription aed = getDefaultPipeline();
+    // Outputs from default and fast pipelines are identical
+    // final AnalysisEngineDescription aed = getFastPipeline();
+    SimplePipeline.runPipeline(jcas, aed);
 
-			System.out.println("Entity: " + entity.getCoveredText()
-					+ " === Polarity: " + entity.getPolarity()
-					+ " === Uncertain? "
-					+ (entity.getUncertainty() == CONST.NE_UNCERTAINTY_PRESENT)
-					+ " === Subject: " + entity.getSubject() + " === Generic? "
-					+ (entity.getGeneric() == CONST.NE_GENERIC_TRUE)
-					+ " === Conditional? "
-					+ (entity.getConditional() == CONST.NE_CONDITIONAL_TRUE)
-					+ " === History? "
-					+ (entity.getHistoryOf() == CONST.NE_HISTORY_OF_PRESENT));
+    serialize(jcas, outputFile);
 
-			if (printCuis) {
-				codes.clear();
-				codes.addAll(getCUIs(entity));
-				for (String cui : codes) {
-					System.out.print(cui + " ");
-				}
-				System.out.println();
-			}
+    final boolean printCuis = Arrays.asList(args).contains("cuis");
+    final Collection<String> codes = new ArrayList<>();
+    for (IdentifiedAnnotation entity : JCasUtil.select(jcas,
+        IdentifiedAnnotation.class)) {
 
-		}
-	}
+      System.out.println("Entity: " + entity.getCoveredText()
+          + " === Polarity: " + entity.getPolarity()
+          + " === Uncertain? "
+          + (entity.getUncertainty() == CONST.NE_UNCERTAINTY_PRESENT)
+          + " === Subject: " + entity.getSubject() + " === Generic? "
+          + (entity.getGeneric() == CONST.NE_GENERIC_TRUE)
+          + " === Conditional? "
+          + (entity.getConditional() == CONST.NE_CONDITIONAL_TRUE)
+          + " === History? "
+          + (entity.getHistoryOf() == CONST.NE_HISTORY_OF_PRESENT));
 
-	/**
-	 * @param identifiedAnnotation
-	 *            -
-	 * @return list of all cuis
-	 */
-	static private Collection<String> getCUIs(
-			final IdentifiedAnnotation identifiedAnnotation) {
-		final FSArray fsArray = identifiedAnnotation.getOntologyConceptArr();
-		if (fsArray == null) {
-			return Collections.emptySet();
-		}
-		final FeatureStructure[] featureStructures = fsArray.toArray();
-		final Collection<String> cuis = new ArrayList<>(
-				featureStructures.length);
-		for (FeatureStructure featureStructure : featureStructures) {
-			if (featureStructure instanceof UmlsConcept) {
-				final UmlsConcept umlsConcept = (UmlsConcept) featureStructure;
-				final String cui = umlsConcept.getCui();
-				final String tui = umlsConcept.getTui();
-				if (tui != null && !tui.isEmpty()) {
-					cuis.add(cui + "_" + tui);
-				} else {
-					cuis.add(cui);
-				}
-			}
-		}
-		return cuis;
-	}
+      if (printCuis) {
+        codes.clear();
+        codes.addAll(getCUIs(entity));
+        for (String cui : codes) {
+          System.out.print(cui + " ");
+        }
+        System.out.println();
+      }
 
-	public static class CopyNPChunksToLookupWindowAnnotations extends
-			JCasAnnotator_ImplBase {
+    }
+  }
 
-		@Override
-		public void process(JCas jCas) throws AnalysisEngineProcessException {
-			for (Chunk chunk : JCasUtil.select(jCas, Chunk.class)) {
-				if (chunk.getChunkType().equals("NP")) {
-					new LookupWindowAnnotation(jCas, chunk.getBegin(),
-							chunk.getEnd()).addToIndexes();
-				}
-			}
-		}
-	}
+  /**
+   * @param identifiedAnnotation
+   *            -
+   * @return list of all cuis
+   */
+  static private Collection<String> getCUIs(
+      final IdentifiedAnnotation identifiedAnnotation) {
+    final FSArray fsArray = identifiedAnnotation.getOntologyConceptArr();
+    if (fsArray == null) {
+      return Collections.emptySet();
+    }
+    final FeatureStructure[] featureStructures = fsArray.toArray();
+    final Collection<String> cuis = new ArrayList<>(
+        featureStructures.length);
+    for (FeatureStructure featureStructure : featureStructures) {
+      if (featureStructure instanceof UmlsConcept) {
+        final UmlsConcept umlsConcept = (UmlsConcept) featureStructure;
+        final String cui = umlsConcept.getCui();
+        final String tui = umlsConcept.getTui();
+        if (tui != null && !tui.isEmpty()) {
+          cuis.add(cui + "_" + tui);
+        } else {
+          cuis.add(cui);
+        }
+      }
+    }
+    return cuis;
+  }
 
-	public static class RemoveEnclosedLookupWindows extends
-			JCasAnnotator_ImplBase {
+  public static class CopyNPChunksToLookupWindowAnnotations extends
+  JCasAnnotator_ImplBase {
 
-		@Override
-		public void process(JCas jCas) throws AnalysisEngineProcessException {
-			List<LookupWindowAnnotation> lws = new ArrayList<>(JCasUtil.select(
-					jCas, LookupWindowAnnotation.class));
-			// we'll navigate backwards so that as we delete things we shorten
-			// the list from the back
-			for (int i = lws.size() - 2; i >= 0; i--) {
-				LookupWindowAnnotation lw1 = lws.get(i);
-				LookupWindowAnnotation lw2 = lws.get(i + 1);
-				if (lw1.getBegin() <= lw2.getBegin()
-						&& lw1.getEnd() >= lw2.getEnd()) {
-					// / lw1 envelops or encloses lw2
-					lws.remove(i + 1);
-					lw2.removeFromIndexes();
-				}
-			}
-		}
-	}
+    @Override
+    public void process(JCas jCas) throws AnalysisEngineProcessException {
+      for (Chunk chunk : JCasUtil.select(jCas, Chunk.class)) {
+        if (chunk.getChunkType().equals("NP")) {
+          new LookupWindowAnnotation(jCas, chunk.getBegin(),
+              chunk.getEnd()).addToIndexes();
+        }
+      }
+    }
+  }
 
-	private static String readFile(File file) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(file));
-		try {
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
+  public static class RemoveEnclosedLookupWindows extends
+  JCasAnnotator_ImplBase {
 
-			while (line != null) {
-				sb.append(line);
-				sb.append("\n");
-				line = br.readLine();
-			}
-			return sb.toString();
+    @Override
+    public void process(JCas jCas) throws AnalysisEngineProcessException {
+      List<LookupWindowAnnotation> lws = new ArrayList<>(JCasUtil.select(
+          jCas, LookupWindowAnnotation.class));
+      // we'll navigate backwards so that as we delete things we shorten
+      // the list from the back
+      for (int i = lws.size() - 2; i >= 0; i--) {
+        LookupWindowAnnotation lw1 = lws.get(i);
+        LookupWindowAnnotation lw2 = lws.get(i + 1);
+        if (lw1.getBegin() <= lw2.getBegin()
+            && lw1.getEnd() >= lw2.getEnd()) {
+          // / lw1 envelops or encloses lw2
+          lws.remove(i + 1);
+          lw2.removeFromIndexes();
+        }
+      }
+    }
+  }
 
-		} finally {
-			br.close();
-		}
-	}
+  private static String readFile(File file) throws IOException {
+    BufferedReader br = new BufferedReader(new FileReader(file));
+    try {
+      StringBuilder sb = new StringBuilder();
+      String line = br.readLine();
 
-	private static void serialize(JCas jcas, File file) {
-		OutputStream outputStream = null;
-		try {
-			outputStream = new BufferedOutputStream(new FileOutputStream(file));
+      while (line != null) {
+        sb.append(line);
+        sb.append("\n");
+        line = br.readLine();
+      }
+      return sb.toString();
 
-			XmiCasSerializer xmiSerializer = new XmiCasSerializer(
-					jcas.getTypeSystem());
-			XMLSerializer xmlSerializer = new XMLSerializer(outputStream, true);
-			xmiSerializer.serialize(jcas.getCas(),
-					xmlSerializer.getContentHandler());
+    } finally {
+      br.close();
+    }
+  }
 
-		} catch (FileNotFoundException fnfe) {
-			// TODO
-			fnfe.printStackTrace();
-		} catch (SAXException saxe) {
-			// TODO
-			saxe.printStackTrace();
-		} finally {
-			try {
-				outputStream.close();
-			} catch (IOException ioe) {
-				// TODO
-				ioe.printStackTrace();
-			}
-		}
-	}
+  private static void serialize(JCas jcas, File file) {
+    OutputStream outputStream = null;
+    try {
+      outputStream = new BufferedOutputStream(new FileOutputStream(file));
+
+      XmiCasSerializer xmiSerializer = new XmiCasSerializer(
+          jcas.getTypeSystem());
+      XMLSerializer xmlSerializer = new XMLSerializer(outputStream, true);
+      xmiSerializer.serialize(jcas.getCas(),
+          xmlSerializer.getContentHandler());
+
+    } catch (FileNotFoundException fnfe) {
+      // TODO
+      fnfe.printStackTrace();
+    } catch (SAXException saxe) {
+      // TODO
+      saxe.printStackTrace();
+    } finally {
+      try {
+        outputStream.close();
+      } catch (IOException ioe) {
+        // TODO
+        ioe.printStackTrace();
+      }
+    }
+  }
 }
