@@ -19,7 +19,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>it.cnr.iac</groupId>
   <artifactId>ctakes-clinical-pipeline</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.3-SNAPSHOT</version>
   <name>Clinical Pipeline Engine using Apache cTAKES</name>
   <description>An implementation of a clinical pipeline engine based on Apache cTAKES</description>
   <url>https://github.com/giuseppetotaro/ctakes-clinical-pipeline</url>
@@ -82,7 +82,7 @@
     <url>https://github.com/giuseppetotaro/ctakes-clinical-pipeline</url>
     <connection>scm:git:git://github.com/giuseppetotaro/ctakes-clinical-pipeline.git</connection>
     <developerConnection>scm:git:git@github.com:giuseppetotaro/ctakes-clinical-pipeline.git</developerConnection>
-    <tag>ctakes-clinical-pipeline-0.0.2</tag>
+    <tag>ctakes-clinical-pipeline-0.0.1</tag>
   </scm>
   <build>
     <pluginManagement>
