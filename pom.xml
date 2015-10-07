@@ -22,6 +22,7 @@
   <version>0.0.2-SNAPSHOT</version>
   <name>Clinical Pipeline Engine using Apache cTAKES</name>
   <description>An implementation of a clinical pipeline engine based on Apache cTAKES</description>
+  <url>https://github.com/giuseppetotaro/ctakes-clinical-pipeline</url>
   <properties>
     <ctakes.version>3.2.2</ctakes.version>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -41,6 +42,24 @@
     <maven-surfire-plugin.version>2.12</maven-surfire-plugin.version>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ssZ</maven.build.timestamp.format>
   </properties>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>giuseppetotaro</id>
+      <name>Giuseppe Totaro</name>
+      <email>totaropeppe [at] gmail [dot] com</email>
+    </developer>
+    <developer>
+      <id>lewismc</id>
+      <name>Lewis John McGibbney</name>
+      <email>lewis [dot] mcgibbney [at] gmail [dot] com</email>
+    </developer>
+  </developers>
   <distributionManagement>
     <repository>
       <id>sonatype-nexus-staging</id>
