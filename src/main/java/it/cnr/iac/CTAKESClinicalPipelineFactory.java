@@ -64,7 +64,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
@@ -318,7 +317,7 @@ final public class CTAKESClinicalPipelineFactory {
     }
   }
 
-  private static void serialize(JCas jcas, File file) {
+  private static void serialize(JCas jcas, File file) throws SAXException, IOException {
     OutputStream outputStream = null;
     try {
       outputStream = new BufferedOutputStream(new FileOutputStream(file));
@@ -330,17 +329,14 @@ final public class CTAKESClinicalPipelineFactory {
           xmlSerializer.getContentHandler());
 
     } catch (FileNotFoundException fnfe) {
-      // TODO
-      fnfe.printStackTrace();
+      throw new FileNotFoundException(fnfe.getMessage());
     } catch (SAXException saxe) {
-      // TODO
-      saxe.printStackTrace();
+      throw new SAXException(saxe.getMessage());
     } finally {
       try {
         outputStream.close();
       } catch (IOException ioe) {
-        // TODO
-        ioe.printStackTrace();
+        throw new IOException(ioe.getMessage());
       }
     }
   }
