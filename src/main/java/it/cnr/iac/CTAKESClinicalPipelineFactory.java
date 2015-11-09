@@ -174,8 +174,25 @@ final public class CTAKESClinicalPipelineFactory {
     return builder.createAggregateDescription();
   }
 
+  private static AnalysisEngineDescription getPipelineForProperty(CTAKESClinicalPipelineEnum pipeline) 
+      throws ResourceInitializationException {
+    switch (pipeline) {
+      case DEFAULT:
+        return getDefaultPipeline();
+      case FAST:
+        return getFastPipeline();
+      case PARSING:
+        return getParsingPipeline();
+      case TOKEN_PROCESSING:
+        return getTokenProcessingPipeline();
+      case NP_CHUNKER:
+        return getStandardChunkAdjusterAnnotator();
+    }
+    return getDefaultPipeline();
+  }
+
   public static void main(final String... args) throws IOException,
-  UIMAException, SAXException {
+      UIMAException, SAXException {
     if (args.length < 2) {
       System.err.println("Usage: "
           + CTAKESClinicalPipelineFactory.class.getName()
@@ -199,7 +216,11 @@ final public class CTAKESClinicalPipelineFactory {
     String note = readFile(inputFile);
 
     jcas.setDocumentText(note);
-    final AnalysisEngineDescription aed = getDefaultPipeline();
+    //final AnalysisEngineDescription aed = getDefaultPipeline();
+    Properties properties = new Properties();
+    properties.load(CTAKESClinicalPipelineFactory.class.getClassLoader().getResourceAsStream("ctakes.properties"));
+    String pipelineType = properties.getProperty("ctakes.pipeline", "DEFAULT");
+    final AnalysisEngineDescription aed = getPipelineForProperty(CTAKESClinicalPipelineEnum.valueOf(pipelineType));
     // Outputs from default and fast pipelines are identical
     // final AnalysisEngineDescription aed = getFastPipeline();
     SimplePipeline.runPipeline(jcas, aed);
